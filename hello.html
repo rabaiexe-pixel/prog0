@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Hello</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/p5@2.3.3/lib/p5.js"></script>-->
+    <script src="p5.js"></script>
+</head>
+
+<body>
+    <script>
+let POS = {
+  x: 400,
+  y: 400
+};
+
+let COLOR = {
+  r: 50,
+  g: 100,
+  b: 200,
+};
+
+// Called by the p5 framework, after it is loaded
+// https://p5js.org/reference/p5/setup/
+function setup() {
+  createCanvas(800, 800);
+  frameRate(10); // call draw X times a second
+}
+
+// Called by the p5 framework periodically
+// https://p5js.org/reference/p5/draw/
+function draw() {
+  background(240);
+
+  fill(color(COLOR.r, COLOR.g, COLOR.b));
+  circle(POS.x, POS.y, 40);
+
+  let c = structuredClone(COLOR);
+  COLOR.r = c.g;
+  COLOR.g = c.b;
+  COLOR.b = c.r;
+}
+
+// Called by the p5 framework when a key is pressed by the user
+// https://p5js.org/reference/p5/keyPressed/
+function keyPressed(event) {
+  let ndir;
+  if (key == 'ArrowUp') {
+    POS.y -= 10;
+  } else if (key == 'ArrowDown') {
+    POS.y += 10;
+  } else if (key == 'ArrowLeft') {
+    POS.x -= 10;
+  } else if (key == 'ArrowRight') {
+    POS.x += 10;
+  } else {
+    return true;
+  }
+
+  return false;
+}
+    </script>
+</body>
+</html>
