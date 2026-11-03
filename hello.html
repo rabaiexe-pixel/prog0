@@ -3,8 +3,8 @@
 
 <head>
     <title>Hello</title>
-    <!--<script src="https://cdn.jsdelivr.net/npm/p5@2.3.3/lib/p5.js"></script>-->
-    <script src="p5.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/p5@2.3.3/lib/p5.js"></script>
+    
 </head>
 
 <body>
@@ -19,6 +19,11 @@ let COLOR = {
   g: 100,
   b: 200,
 };
+let direction = {
+    x: 10,
+    y: 0
+};
+let snake = [{x:600, y:600},{x:640, y:600}];
 
 // Called by the p5 framework, after it is loaded
 // https://p5js.org/reference/p5/setup/
@@ -31,9 +36,17 @@ function setup() {
 // https://p5js.org/reference/p5/draw/
 function draw() {
   background(240);
+    POS.y += direction.y;
+    POS.x += direction.x;
 
+if (POS.x <= 0 || POS.y <= 0 || POS.x >= 800 || POS.y >= 800){
+    noLoop();
+}
   fill(color(COLOR.r, COLOR.g, COLOR.b));
   circle(POS.x, POS.y, 40);
+  for (let i of snake){
+    circle(i.x, i.y, 40);
+  }
 
   let c = structuredClone(COLOR);
   COLOR.r = c.g;
@@ -46,13 +59,17 @@ function draw() {
 function keyPressed(event) {
   let ndir;
   if (key == 'ArrowUp') {
-    POS.y -= 10;
+    direction.x = 0;
+    direction.y = -10;
   } else if (key == 'ArrowDown') {
-    POS.y += 10;
+    direction.x = 0;
+    direction.y = 10;
   } else if (key == 'ArrowLeft') {
-    POS.x -= 10;
+    direction.x = -10;
+    direction.y = 0;
   } else if (key == 'ArrowRight') {
-    POS.x += 10;
+    direction.x = 10;
+    direction.y = 0;
   } else {
     return true;
   }
