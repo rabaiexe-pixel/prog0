@@ -9,6 +9,7 @@
 
 <body>
     <script>
+let CELL = 40;
 let POS = {
   x: 400,
   y: 400
@@ -20,16 +21,22 @@ let COLOR = {
   b: 200,
 };
 let direction = {
-    x: 10,
+    x: CELL,
     y: 0
 };
-let snake = [{x:600, y:600},{x:640, y:600}];
+let snake = [{x:600, y:600},
+{x:600 + CELL, y:600},
+{x:600 + 2*CELL, y:600},
+{x:600 + 3*CELL, y:600}];
+
+
+
 
 // Called by the p5 framework, after it is loaded
 // https://p5js.org/reference/p5/setup/
 function setup() {
   createCanvas(800, 800);
-  frameRate(10); // call draw X times a second
+  frameRate(5); // call draw X times a second
 }
 
 // Called by the p5 framework periodically
@@ -42,10 +49,19 @@ function draw() {
 if (POS.x <= 0 || POS.y <= 0 || POS.x >= 800 || POS.y >= 800){
     noLoop();
 }
+
+snake.pop();
+
+let first = structuredClone (snake[0]);
+first.y += direction.y;
+first.x += direction.x;
+snake.splice(0,0,first);
+
+
   fill(color(COLOR.r, COLOR.g, COLOR.b));
-  circle(POS.x, POS.y, 40);
+  circle(POS.x, POS.y, CELL);
   for (let i of snake){
-    circle(i.x, i.y, 40);
+    circle(i.x, i.y, CELL);
   }
 
   let c = structuredClone(COLOR);
@@ -60,15 +76,15 @@ function keyPressed(event) {
   let ndir;
   if (key == 'ArrowUp') {
     direction.x = 0;
-    direction.y = -10;
+    direction.y = -1*CELL;
   } else if (key == 'ArrowDown') {
     direction.x = 0;
-    direction.y = 10;
+    direction.y = 1*CELL;
   } else if (key == 'ArrowLeft') {
-    direction.x = -10;
+    direction.x = -1*CELL;
     direction.y = 0;
   } else if (key == 'ArrowRight') {
-    direction.x = 10;
+    direction.x = 1*CELL;
     direction.y = 0;
   } else {
     return true;
