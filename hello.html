@@ -10,10 +10,7 @@
 <body>
     <script>
 let CELL = 40;
-let POS = {
-  x: 400,
-  y: 400
-};
+
 
 let COLOR = {
   r: 50,
@@ -24,10 +21,10 @@ let direction = {
     x: CELL,
     y: 0
 };
-let snake = [{x:600, y:600},
-{x:600 + CELL, y:600},
-{x:600 + 2*CELL, y:600},
-{x:600 + 3*CELL, y:600}];
+let snake = [{x:400, y:400},
+{x:400 + CELL, y:400},
+{x:400 + 2*CELL, y:400},
+{x:400 + 3*CELL, y:400}];
 
 
 
@@ -43,12 +40,11 @@ function setup() {
 // https://p5js.org/reference/p5/draw/
 function draw() {
   background(240);
-    POS.y += direction.y;
-    POS.x += direction.x;
+    
 
-if (POS.x <= 0 || POS.y <= 0 || POS.x >= 800 || POS.y >= 800){
-    noLoop();
-}
+//if (POS.x <= 0 || POS.y <= 0 || POS.x >= 800 || POS.y >= 800){
+//    noLoop();
+//}
 
 snake.pop();
 
@@ -59,7 +55,6 @@ snake.splice(0,0,first);
 
 
   fill(color(COLOR.r, COLOR.g, COLOR.b));
-  circle(POS.x, POS.y, CELL);
   for (let i of snake){
     circle(i.x, i.y, CELL);
   }
@@ -74,21 +69,29 @@ snake.splice(0,0,first);
 // https://p5js.org/reference/p5/keyPressed/
 function keyPressed(event) {
   let ndir;
+  ndir ={};
   if (key == 'ArrowUp') {
-    direction.x = 0;
-    direction.y = -1*CELL;
+    ndir.x = 0;
+    ndir.y = -1*CELL;
   } else if (key == 'ArrowDown') {
-    direction.x = 0;
-    direction.y = 1*CELL;
+    ndir.x = 0;
+    ndir.y = 1*CELL;
   } else if (key == 'ArrowLeft') {
-    direction.x = -1*CELL;
-    direction.y = 0;
+    ndir.x = -1*CELL;
+    ndir.y = 0;
   } else if (key == 'ArrowRight') {
-    direction.x = 1*CELL;
-    direction.y = 0;
+    ndir.x = 1*CELL;
+    ndir.y = 0;
   } else {
     return true;
   }
+let rdir = structuredClone(ndir);
+rdir.x = -1*ndir.x;
+rdir.y = -1*ndir.y;
+
+if ((rdir.x == direction.x && rdir.y == direction.y) == false){
+  direction = ndir;
+}
 
   return false;
 }
