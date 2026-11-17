@@ -18,14 +18,17 @@ let COLOR = {
   b: 200,
 };
 let direction = {
-    x: CELL,
+    x: -CELL,
     y: 0
 };
-let snake = [{x:400, y:400},
-{x:400 + CELL, y:400},
-{x:400 + 2*CELL, y:400},
-{x:400 + 3*CELL, y:400}];
-
+const ORIGO = {
+  x: 400+CELL/2,
+  y: 400+CELL/2
+};
+let snake = [{x:ORIGO.x, y:ORIGO.y},
+{x:ORIGO.x + CELL, y:ORIGO.y},
+{x:ORIGO.x + 2*CELL, y:ORIGO.y},
+{x:ORIGO.x + 3*CELL, y:ORIGO.y}];
 
 
 
@@ -40,18 +43,22 @@ function setup() {
 // https://p5js.org/reference/p5/draw/
 function draw() {
   background(240);
-    
 
-//if (POS.x <= 0 || POS.y <= 0 || POS.x >= 800 || POS.y >= 800){
-//    noLoop();
-//}
 
-snake.pop();
 
 let first = structuredClone (snake[0]);
 first.y += direction.y;
 first.x += direction.x;
+
+if (first.x <= 0 || first.y <= 0 || first.x >= 800 || first.y >= 800){
+  noLoop();
+
+}
+else {snake.pop();
+
 snake.splice(0,0,first);
+}
+
 
 
   fill(color(COLOR.r, COLOR.g, COLOR.b));
