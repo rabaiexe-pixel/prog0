@@ -30,13 +30,18 @@ let snake = [{x:ORIGO.x, y:ORIGO.y},
 {x:ORIGO.x + 2*CELL, y:ORIGO.y},
 {x:ORIGO.x + 3*CELL, y:ORIGO.y}];
 
-
+let apple = {
+};
 
 // Called by the p5 framework, after it is loaded
 // https://p5js.org/reference/p5/setup/
 function setup() {
   createCanvas(800, 800);
   frameRate(5); // call draw X times a second
+   apple = {
+  x: Math.floor(random(0,19))*CELL+CELL/2,
+  y:Math.floor(random(0,19))*CELL+CELL/2
+};
 }
 
 // Called by the p5 framework periodically
@@ -65,6 +70,8 @@ snake.splice(0,0,first);
   for (let i of snake){
     circle(i.x, i.y, CELL);
   }
+
+  circle(apple.x,apple.y, CELL);
 
   let c = structuredClone(COLOR);
   COLOR.r = c.g;
