@@ -12,11 +12,6 @@
 let CELL = 40;
 
 
-let COLOR = {
-  r: 50,
-  g: 100,
-  b: 200,
-};
 let direction = {
     x: -CELL,
     y: 0
@@ -33,15 +28,32 @@ let snake = [{x:ORIGO.x, y:ORIGO.y},
 let apple = {
 };
 
+function moveapple(){
+  let utkozott = true;
+  let count = 0;
+  while (utkozott && count < 250){
+    count += 1;
+   apple = {
+    x: Math.floor(random(0,19))*CELL+CELL/2,
+    y:Math.floor(random(0,19))*CELL+CELL/2
+};  
+    utkozott = false;
+  for (let i of snake){
+    if (i.x == apple.x && i.y == apple.y){
+      utkozott = true;
+      break;
+    }
+  }
+
+  }
+
+}
 // Called by the p5 framework, after it is loaded
 // https://p5js.org/reference/p5/setup/
 function setup() {
   createCanvas(800, 800);
   frameRate(5); // call draw X times a second
-   apple = {
-  x: Math.floor(random(0,19))*CELL+CELL/2,
-  y:Math.floor(random(0,19))*CELL+CELL/2
-};
+  moveapple();
 }
 
 // Called by the p5 framework periodically
@@ -59,12 +71,17 @@ if (first.x <= 0 || first.y <= 0 || first.x >= 800 || first.y >= 800){
   noLoop();
 
 }
-else {snake.pop();
+else {
 
 snake.splice(0,0,first);
 }
 
-
+if (first.x == apple.x && first.y == apple.y){
+ moveapple();
+}
+else {
+  snake.pop();
+}
 
   fill(color(0,250,0));
   for (let i of snake){
@@ -75,10 +92,6 @@ snake.splice(0,0,first);
 
   circle(apple.x,apple.y, CELL);
 
-  let c = structuredClone(COLOR);
-  COLOR.r = c.g;
-  COLOR.g = c.b;
-  COLOR.b = c.r;
 }
 
 // Called by the p5 framework when a key is pressed by the user
