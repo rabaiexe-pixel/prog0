@@ -66,10 +66,12 @@ snake.splice(0,0,first);
 
 
 
-  fill(color(COLOR.r, COLOR.g, COLOR.b));
+  fill(color(0,250,0));
   for (let i of snake){
     circle(i.x, i.y, CELL);
   }
+
+  fill(color(250,0,0));
 
   circle(apple.x,apple.y, CELL);
 
