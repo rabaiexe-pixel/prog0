@@ -48,6 +48,14 @@ function moveapple(){
   }
 
 }
+function selfcollision(head,tail){
+  for (t of tail){
+    if (t.x == head.x && t.y == head.y){
+      return true;
+    }
+  }
+  return false;
+}
 // Called by the p5 framework, after it is loaded
 // https://p5js.org/reference/p5/setup/
 function setup() {
@@ -71,17 +79,20 @@ if (first.x <= 0 || first.y <= 0 || first.x >= 800 || first.y >= 800){
   noLoop();
 
 }
+else if (selfcollision(first,snake.slice(1))){
+  noLoop();
+}
 else {
 
 snake.splice(0,0,first);
-}
-
 if (first.x == apple.x && first.y == apple.y){
  moveapple();
 }
 else {
   snake.pop();
 }
+}
+
 
   fill(color(0,250,0));
   for (let i of snake){
